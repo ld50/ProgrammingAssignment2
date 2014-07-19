@@ -26,3 +26,19 @@ makeCacheMatrix <- function(x = matrix()) {
        setinv = setinv,
        getinv = getinv)
 }
+
+
+## when called on a makeCacheMatrix matrix this function will solve that
+# matrix of and cache the result or return the already cached result
+
+cacheSolve <- function(x, ...) {
+  inv <- x$getinv()
+  if(!is.null(inv)) {
+    message("getting cached result")
+    return(inv)
+  }
+  data <- x$get()
+  inv <- solve(data, ...)
+  x$setinv(inv)
+  inv
+}
